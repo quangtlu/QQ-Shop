@@ -1,7 +1,7 @@
 <?php
 
 class OrderModel extends BaseModel {
-    const TABLE = 'order';
+    const TABLE = 'orders';
 
     public function getAll($select = ['*'],$orderBys = [''],$limit = 15){
         return $this->all(self::TABLE,$select,$orderBys,$limit);
@@ -39,5 +39,11 @@ class OrderModel extends BaseModel {
     }
     public function findAllByConditionLimit($col,$value,$start,$number){
         return $this->findAllByLimit(self::TABLE,$col,$value,$start,$number);
+    }
+    public function getMax($maxCol){
+        return $this->findMax(self::TABLE,$maxCol);
+    }
+    public function getNumRecord(){
+        return $this->count(self::TABLE);
     }
 }

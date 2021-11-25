@@ -23,6 +23,7 @@ class BaseController
         require(self::MODELS_FOLDER_NAME . '/' . $modelPath . '.php');
 
     }
+    // input type=file
     // Chuyển file vào thư mục 
     public function moveFile($key, $rootPath = "../"){
         if(!isset($_FILES[$key]) || !isset($_FILES[$key]["name"]) || $_FILES[$key]["name"] == ''){

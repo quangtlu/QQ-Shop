@@ -40,4 +40,7 @@ class CategoryLv2Model extends BaseModel {
     public function checkExitsUpdate($column,$value,$id){
         return $this->isExistUpdate(self::TABLE,$column,$value,$id);
     }
+    public function getNumRecord(){
+        return $this->count(self::TABLE);
+    }
 }

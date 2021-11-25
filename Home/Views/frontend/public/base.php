@@ -101,6 +101,90 @@
    display: -webkit-box;
    -webkit-line-clamp: 2; /* number of lines to show */
    -webkit-box-orient: vertical;
-}
+
+	}
+	.title-td{
+		width: 500px;
+	}
+	.list-group-item{
+		font-size: 16px;
+		font-weight: 400;
+	}
+	.modal-layout{
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 999999;
+		background-color: rgba(0,0,0,0.25);
+		display: none;
+
+	}
+	.modal-form-info{
+		position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+        -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+        -webkit-background-clip: padding-box;
+        -moz-background-clip: padding-box;
+        background-clip: padding-box;
+	}
+	.closeBtn{
+		font-size: 25px;
+		color:red;
+		cursor: pointer;
+		position: absolute;
+		right: 30px;
+		top:20px;
+		z-index: 1;
+	}
+	.list-option{
+		display: flex;
+		flex-direction: column;
+		background-color: #fff;
+		position: absolute;
+		padding: 5px;
+		width: 100%;
+		box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+		z-index: 99;
+		display: none;
+		border-radius: 4px;
+
+	}
+	.list-option-link{
+		font-size: 14px;
+		display: block;
+		padding: 2px 0;
+	}
+	.user-item:hover .list-option{
+		display: block;
+	}
+	.detailBtn{
+		font-size: 16px;
+		color: blue;
+		cursor: pointer;
+	}
+	.exitBtn{
+		font-size: 25px;
+		color:red;
+		cursor: pointer;
+		position: absolute;
+		right: -19px;
+    	top: -20px;
+		z-index: 1;
+	}
+	.product-detail__description{
+		max-height: 500px;
+		overflow-y: scroll;
+		border: 1px solid #ccc;
+	}
 	
 </style>

@@ -6,6 +6,9 @@ class UserModel extends BaseModel {
     public function getAll($select = ['*'],$orderBys = [''],$limit = 15){
         return $this->all(self::TABLE,$select,$orderBys,$limit);
     }
+    public function getAllLimit($start,$number){
+        return $this->all_limit(self::TABLE,$start,$number);
+    }
     public function findById($id){
         return $this->find(self::TABLE,$id);
     }
@@ -30,5 +33,8 @@ class UserModel extends BaseModel {
     }
     public function checkExitsUpdate($column,$value,$id){
         return $this->isExistUpdate(self::TABLE,$column,$value,$id);
+    }
+    public function getNumRecord(){
+        return $this->count(self::TABLE);
     }
 }

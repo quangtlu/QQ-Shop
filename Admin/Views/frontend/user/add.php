@@ -21,17 +21,17 @@
       </div>";
   }
 ?>
-<div style="transform: translateX(20%);" class="container mt-2 animate__animated animate__fadeIn">
+<div style="min-height:550px" class="container mt-2 animate__animated animate__fadeIn">
   <form method="POST" action="./index.php?controller=user&action=store" class="needs-validation mt-5" novalidate>
     <div class="form-row">
-        <div class="col-md-4 mb-4">
+        <div class="col-md-6 mb-6">
           <label for="">Họ tên</label>
           <input type="text" class="form-control" id="" name="fullname" placeholder="Họ tên" value="" required>
           <div class="invalid-feedback">
               Nhập tên Họ tên
           </div>
         </div>
-        <div class="col-md-4 mb-4">
+        <div class="col-md-6 mb-6">
           <label for="">Địa chỉ</label>
           <input type="text" class="form-control" id="" name="address" placeholder="Địa chỉ" value="" required>
           <div class="invalid-feedback">
@@ -40,14 +40,14 @@
         </div>
     </div>
     <div class="form-row">
-        <div class="col-md-4 mb-4">
+        <div class="col-md-6 mb-6">
           <label for="">Số điện thoại</label>
           <input type="tel" class="form-control" id="" name="phone" placeholder="Số điện thoại" value="" required>
           <div class="invalid-feedback">
               Nhập tên số điện thoại
           </div>
         </div>
-        <div class="col-md-4 mb-4">
+        <div class="col-md-6 mb-6">
           <label for="">Email</label>
           <input type="email" class="form-control" id="" name="email" placeholder="Email" value="" required>
           <div class="invalid-feedback">
@@ -56,11 +56,11 @@
         </div>
     </div>
     <div class="form-row">
-      <div class="col-md-4 mb-4">
+      <div class="col-md-6 mb-6">
         <label for="">Mật khẩu</label>
         <input type="password" class="form-control" id="" name="password" placeholder="Mật khẩu" value="" required>
       </div>
-      <div class="col-md-4 mb-4">
+      <div class="col-md-6 mb-6">
         <label for="roleName">Nhóm quyền</label>
         <select class="form-control" name="roleName" id="roleName">
             <?php foreach($roles as $item){
@@ -69,7 +69,7 @@
         </select>
       </div>
     </div>
-    <button id="submitBtn" class="btn btn-primary" type="submit">Thêm mới</button>  
+    <button id="submitBtn" class="btn btn-primary mt-3" type="submit">Thêm mới</button>  
   </form>
 </div>
 <?php $this->view('frontend.public.footer')?>

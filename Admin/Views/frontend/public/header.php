@@ -79,7 +79,10 @@
                         <a href="./index.php?controller=product"><i class="sidebar-icon fab fa-product-hunt"></i>Quản lý sản phẩm</a>
                     </li>
                     <li>
-                        <a href="##"><i class="sidebar-icon fas fa-shopping-cart"></i>Quản lý đơn hàng</a>
+                        <a href="./index.php?controller=order"><i class="sidebar-icon fas fa-shopping-cart"></i>Quản lý đơn hàng</a>
+                    </li>
+                    <li>
+                        <a href="./index.php?controller=mail"><i class="sidebar-icon fas fa-envelope"></i>Quản lý phản hồi</a>
                     </li>
                 </ul>
             </div>
@@ -189,7 +192,7 @@
                                     <i data-feather="settings" aria-hidden="true"></i>
                                     <span>Cài đặt</span>
                                 </a></li>
-                            <li><a class="danger" href="./index.php?controller=logout">
+                            <li><a class="danger" href="./index.php?controller=home&action=logout">
                                     <i data-feather="log-out" aria-hidden="true"></i>
                                     <span>Đăng xuất</span>
                                 </a></li>

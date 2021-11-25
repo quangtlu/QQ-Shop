@@ -46,10 +46,30 @@
             $startRecord = ($current_page - 1) * $productOnePage;
             // Lấy ra limit sản phẩm có cùng danh mục cấp 3
             $data = $this->productModel->findAllByConditionLimit("category_lv3ID",$id,$startRecord, $productOnePage);
+            if(isset($_POST["sortBy"])){
+                $sortBy = $_POST["sortBy"];
+                switch($sortBy){
+                    case "default":
+                        $data = $this->productModel->findAllByConditionLimit("category_lv3ID",$id,$startRecord, $productOnePage);
+                        break;
+                    case "new":
+                        $data = $this->productModel->findAllByConditionLimit("category_lv3ID",$id,$startRecord, $productOnePage,"created_at desc");
+                        break;
+                    case "asc":
+                        $data = $this->productModel->findAllByConditionLimit("category_lv3ID",$id,$startRecord, $productOnePage,"price asc");
+                        break;
+                    case "desc":
+                        $data = $this->productModel->findAllByConditionLimit("category_lv3ID",$id,$startRecord, $productOnePage,"price desc");
+                        break;
+                    default:
+                        $data = $this->productModel->findAllByConditionLimit("category_lv3ID",$id,$startRecord, $productOnePage);
+                }
+            }
             for($i = 0; $i < count($data); $i++){
                     $old_price_formated = number_format($data[$i]["price"], 0, '', ',');
                     $current_price = $data[$i]["discount"] !=0 ? ($data[$i]["price"] - $data[$i]["price"]*($data[$i]["discount"]/100))  :  $data[$i]["price"];
                     $current_price_formated = number_format($current_price, 0, '', ',');
+                    
                     $img_path = $this->fixUrl($data[$i]["thumbnail"],"./");
                     echo 
                     "
@@ -86,7 +106,6 @@
                             <h4><a>".$data[$i]["title"]."</a></h4>
                             <div class='new-collections-grid1-left simpleCart_shelfItem'>
                                 <p><i>$old_price_formated ₫</i> <span class='item_price'>$current_price_formated ₫</span></p>
-                                <p><a class='item_add' href='#'>add to cart </a></p>
                             </div>
                         </div>
                     </div>";

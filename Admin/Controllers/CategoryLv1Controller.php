@@ -11,8 +11,7 @@
         }
         
         public function index($alert=''){
-            $categoriesLv1 = $this->categoryLv1Model->getAll();
-            $postTotal = count($categoriesLv1);// Lấy tổng số bài viết.
+            $postTotal = $this->categoryLv1Model->getNumRecord();
             $postOnePage = 10; // Số bài viết hiển thị trong 1 trang.
             // Khi đã có tổng số bài viết và số bài viết trong một trang ta có thể tính ra được tổng số trang
             $pageTotal = ceil($postTotal / $postOnePage);

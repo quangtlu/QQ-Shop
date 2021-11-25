@@ -13,8 +13,8 @@
 
 <body>
     <?php $this->view("frontend.public.header") ?>
-        <!-- breadcrumbs -->
-		<div class="breadcrumbs">
+    <!-- breadcrumbs -->
+    <div class="breadcrumbs">
         <div class="container">
             <ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
                 <li><a href="./index.php"><i class="glyphicon fas fa-home"></i></span>Trang chủ</a></li>
@@ -25,94 +25,119 @@
         </div>
     </div>
     <!-- //breadcrumbs -->
-	<div class="products">
-		<div class="container">
-			<div class="col-md-12 products-right">
-				<div class="products-right-grid">
-					<div class="products-right-grids animated wow slideInRight" data-wow-delay=".5s">
-						<div class="sorting">
-							<select id="country" onchange="change_country(this.value)" class="frm-field required sect">
-								<option value="null">Default sorting</option>
-								<option value="null">Sort by popularity</option> 
-								<option value="null">Sort by average rating</option>					
-								<option value="null">Sort by price</option>								
-							</select>
-						</div>
-						<div class="sorting-left">
-							<select id="country1" onchange="change_country(this.value)" class="frm-field required sect">
-								<option value="null">Item on page 9</option>
-								<option value="null">Item on page 18</option> 
-								<option value="null">Item on page 32</option>					
-								<option value="null">All</option>								
-							</select>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-				</div>
-				<!-- List product -->
-				<div class="list-product products-right-grids-bottom"></div>
-				<!-- Phân trang -->
+    <div class="new-collections">
+        <div class="container">
+            <div class="col-md-12 products-right">
+                <!-- List product -->
+                <h3 class='title-list-product animated wow zoomIn' data-wow-delay='.5s'>Danh sách sản phẩm</h3>
+                <i style="font-size: 20px;padding-right:5px;color:#d8703f" class="fas fa-sort"></i><select id="sort" style="width:fit-content" class="frm-field required sect">
+                    <option selected value="default">Mặc định</option>
+			        <option value="new">Sản phẩm mới nhất</option> 
+                    <option value="asc">Giá tiền từ thấp đến cao</option>
+                    <option value="desc">Giá tiền từ cao đến thấp</option>
+                </select>
+                <div class="list-product new-collections-grids"></div>
+                <!-- Phân trang -->
 
-				<!-- Phân trang -->
-				<nav class="numbering animated wow slideInRight" data-wow-delay=".5s" style="margin:10px" aria-label="...">
-					<ul class="pagination">
-						<?php for ($i = 1; $i <= $pageTotal; $i++): ?>
-							<li class="page-item">
-								<a style="cursor: pointer;" class="page-link"><?= $i; ?></a>
-							</li>
-						<?php endfor; ?>
-					</ul>
-				</nav>
-			</div>
-			<div class="clearfix"> </div>
-		</div>
-	</div>
-<!-- //breadcrumbs -->
+                <!-- Phân trang -->
+                <nav class="numbering animated wow slideInRight" data-wow-delay=".5s" style="margin:10px"
+                    aria-label="...">
+                    <ul class="pagination">
+                        <?php for ($i = 1; $i <= $pageTotal; $i++): ?>
+                        <li class="page-item">
+                            <a style="cursor: pointer;" class="page-link"><?= $i; ?></a>
+                        </li>
+                        <?php endfor; ?>
+                    </ul>
+                </nav>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+    <!-- //breadcrumbs -->
     <!-- //single-related-products -->
     <?php $this->view("frontend.public.footer") ?>
-<script>
+    <script>
     $(document).ready(function() {
-		var id_cate = <?= $_GET["id"] ?>
+        var id_cate = <?= $_GET["id"] ?>
         // Load sản phẩm theo danh mục
         $.ajax({
-            url		: './index.php?controller=product&action=productBycategory',
+            url: './index.php?controller=product&action=productBycategory',
             type: 'POST',
-            data: {id_cate:id_cate},
+            data: {
+                id_cate: id_cate
+            },
             dataType: 'html',
-            success : function(data){
+            success: function(data) {
                 $('.list-product').html(data);
+                // Sắp xếp sản phẩm
+                $('#sort').on('change', function() {
+                    var sortBy = $(this).find(":selected").val();
+                    $.ajax({
+                        url: './index.php?controller=product&action=productBycategory',
+                        data: {
+                            sortBy: sortBy,
+                            id_cate: id_cate
+
+                        },
+                        type: 'POST',
+                        dataType: 'html',
+                        success: function(data) {
+                            $('.list-product').html(data);
+                        }
+                    });
+                });
             }
         });
-        // Dữ liệu khi click trang sản phẩm liên quan
-        $('a.page-link').on('click',function(){
+        // Dữ liệu khi click trang 
+        $('a.page-link').on('click', function() {
             var _p = $(this).text();
             $.ajax({
-                url		: './index.php?controller=product&action=productBycategory',
-                data	: {page:_p,id_cate:id_cate},
-                type	: 'POST',
+                url: './index.php?controller=product&action=productBycategory',
+                data: {
+                    page: _p,
+                    id_cate: id_cate
+                },
+                type: 'POST',
                 dataType: 'html',
-                success : function(data){
+                success: function(data) {
                     $('.list-product').html(data);
-                    
+                    // Sắp xếp sản phẩm
+                    $('#sort').on('change', function() {
+                        var sortBy = $(this).find(":selected").val();
+                        $.ajax({
+                            url: './index.php?controller=product&action=productBycategory',
+                            data: {
+                                sortBy: sortBy,
+                                id_cate: id_cate
+
+                            },
+                            type: 'POST',
+                            dataType: 'html',
+                            success: function(data) {
+                                $('.list-product').html(data);
+                            }
+                        });
+			});
+
                 }
             });
         });
         // Active số trang khi click
-        $( "li.page-item" ).first().addClass('active')
+        $("li.page-item").first().addClass('active')
 
-        $(".page-item").click(function () {
+        $(".page-item").click(function() {
             if ($(this).hasClass("active")) {
                 $(".page-item").removeClass("active");
-            }
-            else {
+            } else {
                 $(".page-item").removeClass("active");
                 $(this).addClass("active");
             }
         });
 
-        
+
     });
-</script>
+    </script>
 </body>
 
 </html>

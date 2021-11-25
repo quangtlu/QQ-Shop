@@ -6,8 +6,13 @@ class ProductModel extends BaseModel {
     public function getAll($select = ['*'],$orderBys = [''],$limit = 15){
         return $this->all(self::TABLE,$select,$orderBys,$limit);
     }
-    public function getAllLimit($start,$number){
-        return $this->all_limit(self::TABLE,$start,$number);
+    public function getAllLimit($start,$number,$orderByString=''){
+        return $this->all_limit(self::TABLE,$start,$number,$orderByString);
+    }
+    public function searchAllLimit($start, $number, $col, $keyword)
+    {
+        return $this->search_limit(self::TABLE,$start,$number,$col, $keyword);
+
     }
     public function findById($id){
         return $this->find(self::TABLE,$id);
@@ -37,7 +42,16 @@ class ProductModel extends BaseModel {
     public function findAllByCondition($col,$value){
         return $this->findAllBy(self::TABLE,$col,$value);
     }
-    public function findAllByConditionLimit($col,$value,$start,$number){
-        return $this->findAllByLimit(self::TABLE,$col,$value,$start,$number);
+    public function findAllByConditionLimit($col,$value,$start,$number,$orderByString=''){
+        return $this->findAllByLimit(self::TABLE,$col,$value,$start,$number,$orderByString);
+    }
+    public function getNumRecord(){
+        return $this->count(self::TABLE);
+    }
+    // tính tổng tiền cho sản phẩm
+    public function getSum($id,$price,$discount,$quantity){
+        $sql = "SELECT $quantity*($price - ($price*($discount/100))) as total from product WHERE id = '$id'";
+        $query = mysqli_query($this->connect(),$sql);
+        return mysqli_fetch_assoc($query);
     }
 }

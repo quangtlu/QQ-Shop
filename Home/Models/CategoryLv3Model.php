@@ -43,4 +43,7 @@ class CategoryLv3Model extends BaseModel {
     public function checkExitsUpdate2Value($column1,$value1,$column2,$value2,$id){
         return $this->isExistUpdate2Value(self::TABLE,$column1,$value1,$column2,$value2,$id);
     }
+    public function getNumRecord(){
+        return $this->count(self::TABLE);
+    }
 }

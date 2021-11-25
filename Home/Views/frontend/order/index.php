@@ -12,103 +12,213 @@
 
 <body>
     <?php $this->view("frontend.public.header") ?>
+    <div class="hide-when-search">
+        <!-- breadcrumbs -->
+        <div class="breadcrumbs">
+            <div class="container">
+                <ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
+                    <li><a href="./"><span class="glyphicon fas fa-home" aria-hidden="true"></span>Trang chủ</a></li>
+                    <li class="active">Giỏ hàng</li>
+                </ol>
+            </div>
+        </div>
+        <!-- //breadcrumbs -->
+        <!-- checkout -->
+        <div class="container mt-3" <?php if($flag) echo "style='display:none'"?>>
+            <div class="alert alert-danger" role="alert" >
+                Giỏ hàng trống !
+            </div>
+            <div class="mb-5 checkout-right-basket animated wow slideInRight" data-wow-delay=".5s">
+                <a href="javascript:history.back()">
+                    <i class="glyphicon fas fa-arrow-left" aria-hidden="true"></i>
+                    <span style="padding-left:10px">Tiếp tục mua sắm</span>
+                </a>
+            </div>
+        </div>
+        <div class="checkout" <?php if(!$flag) echo "style ='display:none'";?>>
+            <div class="container">
+                <form method="Post" action="./index.php?controller=order&action=buy">
+                    <div class="checkout-right animated wow slideInUp" data-wow-delay=".5s">
     
-    <!-- breadcrumbs -->
-	<div class="breadcrumbs">
-		<div class="container">
-			<ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
-				<li><a href="./"><span class="glyphicon fas fa-home" aria-hidden="true"></span>Trang chủ</a></li>
-				<li class="active">Chi tiết đơn hàng</li>
-			</ol>
-		</div>
-	</div>
-<!-- //breadcrumbs -->
-<!-- checkout -->
-	<div class="checkout">
-		<div class="container">
-			<h3 class="animated wow slideInLeft" data-wow-delay=".5s">Đơn hàng của bạn bao gồm: <span><?= count($productList) ?> sản phẩm</span></h3>
-			<div class="checkout-right animated wow slideInUp" data-wow-delay=".5s">
-				<table class="timetable_sub">
-					<thead>
-						<tr>
-							<th>STT</th>	
-							<th>Đơn hàng</th>
-							<th>Số lượng</th>
-							<th>Tên sản phẩm</th>
-							<th>Giá</th>
-							<th>Xóa</th>
-						</tr>
-					</thead>                        
-                    <?php 
-                        $stt = 0;
-                        for($i=0; $i< count($productList); $i++){
-                            $stt = $i + 1;
-                            $imgPath = $this->fixUrl($productList[$i]["thumbnail"],"./");
-
-                            $current_price = $productList[$i]["discount"] !=0 ? ($productList[$i]["price"] - $productList[$i]["price"]*($productList[$i]["discount"]/100))  :  $productList[$i]["price"];
-
-                            $current_price_formated = number_format($current_price, 0, '', ',');
-
-                        echo "
-                            <tr class='rem1'>
-                                <td class='invert'>$stt</td>
-                                <td class='invert-image'><a href='single.html'><img src='$imgPath' alt=' ' class='img-responsive' /></a></td>
-                                <td class='invert'>
-                                    <div class='quantity'> 
-                                        <div class='quantity-select'>                           
-                                            <div class='entry value-minus'>&nbsp;</div>
-                                            <div class='entry value'><span>1</span></div>
-                                            <div class='entry value-plus active'>&nbsp;</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class='invert'>".$productList[$i]["title"]."</td>
-                                <td class='invert'>".$current_price_formated."₫</td>
-                                <td class='invert'>
-                                    <div class='rem'>
-                                        <i style='color:red;cursor:pointer' class='fas fa-trash-alt'></i>
-                                    </div>
-                                </td>
-                            </tr>
-                        ";
-
-                    } ?>
-				</table>
-			</div>
-			<div class="checkout-left">	
-				<div class="checkout-left-basket animated wow slideInLeft" data-wow-delay=".5s">
-					<h4>Continue to basket</h4>
-					<ul>
-						<li>Product1 <i>-</i> <span>$250.00 </span></li>
-						<li>Product2 <i>-</i> <span>$290.00 </span></li>
-						<li>Product3 <i>-</i> <span>$299.00 </span></li>
-						<li>Total Service Charges <i>-</i> <span>$15.00</span></li>
-						<li>Total <i>-</i> <span>$854.00</span></li>
-					</ul>
-				</div>
-				<div class="checkout-right-basket animated wow slideInRight" data-wow-delay=".5s">
-					<a href="single.html"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Continue Shopping</a>
-				</div>
-				<div class="clearfix"> </div>
-			</div>
-		</div>
-	</div>
-<!-- //checkout -->
-
+                        <table class="timetable_sub">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Đơn hàng</th>
+                                    <th>Số lượng</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Đơn Giá</th>
+                                    <th>Thành tiền</th>
+                                    <th>Xóa</th>
+                                </tr>
+                            </thead>
+                                <tbody id="content"></tbody>
+                            <!-- Phân trang -->
+                        </table>
+                        <nav style="margin:10px" aria-label="...">
+                            <ul class="pagination ml-2">
+                                <?php for ($i = 1; $i <= $pageTotal; $i++): ?>
+                                <li class="page-item">
+                                    <a style="cursor: pointer;" class="page-link"><?= $i; ?></a>
+                                </li>
+                                <?php endfor; ?>
+                            </ul>
+                        </nav>
+                    </div>
+                    <button type="submit" class="btn btn-success mt-3">Mua hàng</button>
+                </form>
+                <div class="checkout-right-basket animated wow slideInRight" data-wow-delay=".5s">
+                    <a href="javascript:history.back()">
+                        <i class="glyphicon fas fa-arrow-left" aria-hidden="true"></i>
+                        <span style="padding-left:10px">Tiếp tục mua sắm</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Search results -->
+    <div class="new-collections">
+        <div class='container'>
+            <!-- Sản phẩm -->
+            <h3 class='title-list-product animated wow zoomIn' data-wow-delay='.5s'>Danh sách sản phẩm</h3>
+            <div class='list-product new-collections-grids'></div>
+            <!-- Phân trang -->
+            <nav style="margin:10px" aria-label="...">
+                <ul class="pagination ml-2">
+                    <?php for ($i = 1; $i <= $pageTotal; $i++): ?>
+                    <li class="page-item-search">
+                        <a style="cursor: pointer;" class="page-link"><?= $i; ?></a>
+                    </li>
+                    <?php endfor; ?>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- Search results -->
     <?php $this->view("frontend.public.footer") ?>
-    <!--quantity-->
+
     <script>
-        $('.value-plus').on('click', function(){
-            var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)+1;
-            divUpd.text(newVal);
+    $(document).ready(function() {
+        // Ẩn kết quả tìm kiếm
+        $('.new-collections').hide()
+        // Load sản phẩm trong giỏ hàng
+        $.ajax({
+            url: './index.php?controller=order&action=loadOrder',
+            type: 'POST',
+            dataType: 'html',
+            success: function(data) {
+                $('#content').html(data);
+                // Xóa sản phẩm trong giỏ hàng
+                $('.removeBtn').on('click', function() {
+                    var id = $(this).attr("data-id");
+                    $.ajax({
+                        url: './index.php?controller=order&action=remove',
+                        data: {
+                            id: id
+                        },
+                        type: 'GET',
+                        dataType: 'html',
+                    });
+
+                    $(this).closest('.rem1').hide()
+                });
+                // thay đổi số lượng
+                $('.quantity').on('change', function() {
+                    var quantity = $(this).val()
+                    var priceString = $(this).closest('.rem1').children('.price').text()
+
+                    var priceNumber = Number(priceString.replace(/[^0-9.-]+/g, ""));
+                    var total = quantity * priceNumber
+                    var totalFormat = total.toLocaleString('it-IT', {
+                        style: 'currency',
+                        currency: 'VND'
+                    });
+                    //  thay đổi thành tiền của từng sản phẩm
+                    $(this).closest('.rem1').children('.total-money').html(totalFormat)
+                    var orderList = $('tr.rem1')
+                    var totalMoney = 0;
+                    var totalQuantity = 0;
+
+                    orderList.each(function(index) {
+                        var total = Number($(this).find(".total-money").text()
+                            .replace(/[^0-9]/g, ''))
+                        var quantity = Number($(this).find('.quantity').val());
+                        totalQuantity += quantity;
+                        totalMoney += total;
+                    })
+                    var totalMoneyFormat = totalMoney.toLocaleString('it-IT', {
+                        style: 'currency',
+                        currency: 'VND'
+                    });
+
+                    $('.total-money-checkout').html(totalMoneyFormat)
+                    
+                })
+            }
         });
 
-        $('.value-minus').on('click', function(){
-            var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)-1;
-            if(newVal>=1) divUpd.text(newVal);
+
+        // Dữ liệu khi click next trang
+        $('a.page-link').on('click', function() {
+            var _p = $(this).text();
+            $.ajax({
+                url: './index.php?controller=order&action=loadOrder',
+                data: {
+                    page: _p
+                },
+                type: 'POST',
+                dataType: 'html',
+                success: function(data) {
+                    $('#content').html(data);
+
+                    // Khi click xóa sản phẩm
+                    $('.removeBtn').on('click', function() {
+                        var id = $(this).attr("data-id");
+                        $.ajax({
+                            url: './index.php?controller=order&action=remove',
+                            data: {
+                                id: id
+                            },
+                            type: 'GET',
+                            dataType: 'html',
+
+                        });
+                        // Ẩn sản phẩm
+                        $(this).closest('.rem1').hide()
+                    });
+                    // thay đổi giá tiền theo số lượng
+                    $('.quantity').on('change', function() {
+                        var quantity = $(this).val()
+                        var priceString = $(this).closest('.rem1').children(
+                            '.price').text()
+
+                        var priceNumber = Number(priceString.replace(/[^0-9.-]+/g,
+                            ""));
+                        var total = quantity * priceNumber
+                        var totalFormat = total.toLocaleString('it-IT', {
+                            style: 'currency',
+                            currency: 'VND'
+                        });
+
+                        $(this).closest('.rem1').children('.total-money').html(
+                            totalFormat)
+                    })
+                }
+            });
         });
+
+        // Active số trang khi click
+        $("li.page-item").first().addClass('active')
+        $(".page-item").click(function() {
+            if ($(this).hasClass("active")) {
+                $(".page-item").removeClass("active");
+            } else {
+                $(".page-item").removeClass("active");
+                $(this).addClass("active");
+            }
+        });
+    });
     </script>
-<!--quantity-->
 </body>
 
 </html>

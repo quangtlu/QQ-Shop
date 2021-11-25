@@ -27,21 +27,24 @@
                     Nhập tên sản phẩm
                 </div>
             </div>
-            <div class="col-md-2 mb-2">
-                <label class="form-label" for="price">Giá</label>
-                <input type="number" class="form-control" id="price" value="<?= $product["price"] ?>" name="price" placeholder="Giá" value=""
-                    required>
-                <div class="invalid-feedback">
-                    Nhập giá sản phẩm
+            <div class="form-row col-md-4">
+                <div class="col-md-6 mb-6">
+                    <label class="form-label" for="price">Giá</label>
+                    <input type="number" class="form-control" id="price" value="<?= $product["price"] ?>" name="price" placeholder="Giá" value=""
+                        required>
+                    <div class="invalid-feedback">
+                        Nhập giá sản phẩm
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-2 mb-2">
-                <label class="form-label" for="discount">Giảm giá (%) </label>
-                <input type="number" class="form-control" id="discount" value="<?= $product["discount"] ?>" name="discount" placeholder="Giảm giá" value=""
-                    required>
-                <div class="invalid-feedback">
-                    Nhập giảm giá
+                <div class="col-md-6 mb-6">
+                    <label class="form-label" for="discount">Giảm giá (%) </label>
+                    <input type="number" class="form-control" id="discount" value="<?= $product["discount"] ?>" name="discount" placeholder="Giảm giá" value=""
+                        required>
+                    <div class="invalid-feedback">
+                        Nhập giảm giá
+                    </div>
                 </div>
+
             </div>
         </div>                
         <div class="form-row">
@@ -80,13 +83,13 @@
                 </div>
                 <div class="col-md-12 mb-12">
                     <label class="form-label" for="thumbnail">Ảnh đại diện</label>
-                    <img class='thumbnail-img' src="<?= $product["thumbnail"] ?>" alt="">
-                    <input  type="file" accept=".jpg, .png, .jpeg, .gif" class="form-control" id="thumbnail" name="thumbnail" placeholder="Ảnh đại diện" 
+                    <img class='thumbnail-img' src="<?= $this->fixUrl($product["thumbnail"],"../") ?>" alt="">
+                    <input  type="file" accept=".jpg, .png, .jpeg, .gif" class="form-control" id="thumbnail" name="thumbnail"
                     >
                 </div>
                 <div class="col-md-12 mb-12">
                     <label class="form-label" for="galleries">Ảnh chi tiết</label>
-                    <input multiple="multiple" accept=".jpg, .png, .jpeg, .gif" type="file" class="form-control" id="galleries" name="galleries[]" placeholder="Ảnh đại diện" 
+                    <input multiple="multiple" accept=".jpg, .png, .jpeg, .gif" type="file" class="form-control" id="galleries" name="galleries[]"
                     >
                 </div>
             </div>
@@ -102,7 +105,7 @@
     placeholder: 'Mô tả sản phẩm',
     tabsize: 2,
     height: 300,
-    width:865,
+    width:950,
     toolbar: [
           ['style', ['style']],
           ['font', ['bold', 'underline', 'clear']],

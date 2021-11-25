@@ -14,9 +14,8 @@
         }
         
         public function index($alert=''){
-            $categoriesLv2 = $this->categoryLv2Model->getAll();
             $categoriesLv1 = $this->categoryLv1Model->getAll();
-            $postTotal = count($categoriesLv2);
+            $postTotal = $this->categoryLv2Model->getNumRecord();
             $postOnePage = 10; 
             $pageTotal = ceil($postTotal / $postOnePage);
             return $this->view('frontend.categories.Lv2.index',[

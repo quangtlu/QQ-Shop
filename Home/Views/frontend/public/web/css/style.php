@@ -341,7 +341,7 @@ a.simpleCart_empty {
 	font-size: 3em;
     color: #fff;
     margin: 0em 0 0 7.5em;
-	font-weight:300;
+	font-weight:400;
 	font-family: 'Lato', sans-serif;
 }
 .banner-info h4 span{
@@ -1408,21 +1408,13 @@ input#amount {
 /*-- //products --*/
 /*--Typography--*/
 .well {
-    font-weight: 300;
+    font-weight: 400;
     font-size: 14px;
-}
-.list-group-item {
-    font-weight: 300;
-    font-size: 14px;
-}
-li.list-group-item1 {
-    font-size: 14px;
-    font-weight: 300;
 }
 .typo p {
     margin: 0;
     font-size: 14px;
-    font-weight: 300;
+    font-weight: 400;
 }
 .show-grid [class^=col-] {
     background: #fff;
@@ -1447,14 +1439,14 @@ li.list-group-item1 {
   color: #999;
   font-size: 0.85em;
   margin-bottom: 1em;
-  font-weight: 300;
+  font-weight: 400;
 }
 .grid_4{
 	background:none;
 	margin-top:50px;
 }
 .label {
-  font-weight: 300 !important;
+  font-weight: 400 !important;
   border-radius:4px;
 }  
 .grid_5{
@@ -1492,7 +1484,7 @@ li.list-group-item1 {
   color: #888;
   font-size: 0.9em;
   margin-bottom: 1em;
-  font-weight: 300;
+  font-weight: 400;
 }
 .bs-docs-example {
   margin: 1em 0;
@@ -1519,7 +1511,7 @@ section#tables  p {
   visibility: visible;
 }
 .label {
-  font-weight: 300 !important;
+  font-weight: 400 !important;
 }
 .label {
   padding: 4px 6px;
@@ -1617,7 +1609,7 @@ h2.typoh2{
 		font-size: 1.6em;
 	}
 	.alert, p,ol.breadcrumb li, .grid_3 p,.well, ul.list-group li, li.list-group-item1,a.list-group-item {
-		font-size: 13px;
+		font-size: 14px;
 	}
 	.alert {
 		padding: 10px;
@@ -2235,7 +2227,6 @@ table.timetable_sub {
 	border:1px solid #CDCDCD;
 }
 td.invert-image a img {
-    width:30%;
     margin: 0 auto;
 }
 .rem{
@@ -3304,6 +3295,9 @@ td.invert-image a img {
 	}
 	td.invert-image a img {
 		width: 50%;
+	}
+	.invert-image{
+		width: 100px;
 	}
 	.timetable_sub td {
 		border: none;

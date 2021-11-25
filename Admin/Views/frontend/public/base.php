@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
@@ -14,7 +14,7 @@
 html {
     box-sizing: border-box;
     scroll-behavior: smooth;
-    
+
 }
 
 * {
@@ -71,13 +71,14 @@ img {
     justify-content: space-between;
 }
 
-tbody{
+tbody {
     font-size: 13px;
 }
+
 thead {
     font-size: 13px;
     background-color: #17a2b8;
-    color:#fff;
+    color: #fff;
 }
 
 
@@ -106,7 +107,7 @@ thead {
     color: blue;
 }
 
-.close-edit-btn{
+.close-edit-btn {
     float: right;
     color: red;
     font-size: 25px;
@@ -118,11 +119,14 @@ thead {
     color: #ccc;
     float: right;
     cursor: pointer;
-    text-shadow: 0px 0px 6px rgba(0,0,0,0.7);
+    padding:20px;
+    text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.7);
 }
-.close-btn:hover{
-    color:red;
+
+.close-btn:hover {
+    color: red;
 }
+
 .valid-feedback {
     font-size: 16px !important;
 }
@@ -137,7 +141,8 @@ thead {
     margin: 10px;
 }
 
-.table td, .table th{
+.table td,
+.table th {
     text-align: center !important;
 }
 
@@ -178,33 +183,39 @@ thead {
     text-transform: uppercase;
     letter-spacing: 2px;
 }
-.chart-pie{
+
+.chart-pie {
     width: 500px !important;
     height: 500px !important;
 
 }
-.ignore{
+
+.ignore {
     display: none;
     animation: fadeIn linear 0.5s;
 }
-#table:hover .ignore{
+
+#table:hover .ignore {
     display: block;
     transition: all linear 0.2s;
 }
-table{
+
+table {
     margin-bottom: 0 !important;
 }
-.modal-layout{
+
+.modal-layout {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: 999999;
-    background-color: rgba(0,0,0,0.25);
+    background-color: rgba(0, 0, 0, 0.25);
     display: none;
 }
-.main-layout{
+
+.main-layout {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -221,7 +232,8 @@ table{
     -moz-background-clip: padding-box;
     background-clip: padding-box;
 }
-.main-product-layout{
+
+.main-product-layout {
     position: fixed;
     top: 0;
     left: 0;
@@ -233,19 +245,68 @@ table{
     overflow: scroll;
 
 }
-.thumbnail-img{
+
+.thumbnail-img {
     height: 100px;
     width: auto;
     border-radius: 3px;
 }
-.footer{
+
+.footer {
     float: bottom;
 }
+
+.detailBtn {
+    font-size: 16px;
+    color: blue;
+    cursor: pointer;
+}
+
 .swiper {
-            height: auto;
-            width: 450px;
-            float: left;
-        }
+    height: auto;
+    width: 450px;
+    float: left;
+}
+
+.modal-layout {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999999;
+    background-color: rgba(0, 0, 0, 0.25);
+    display: none;
+
+}
+
+.modal-form-info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50vw;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding-box;
+    background-clip: padding-box;
+}
+
+.exitBtn {
+    font-size: 25px;
+    color: red;
+    cursor: pointer;
+    position: absolute;
+    right: -19px;
+    top: -20px;
+    z-index: 1;
+}
 </style>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">

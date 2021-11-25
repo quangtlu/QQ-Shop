@@ -9,11 +9,33 @@
         }
         
         public function index(){
-            $roles = $this->roleModel->getAll();
+            $postTotal = $this->roleModel->getNumRecord();
+            $postOnePage = 10; 
+            $pageTotal = ceil($postTotal / $postOnePage);
             return $this->view('frontend.role.index',[
-                "roles" => $roles,
+                "pageTotal" => $pageTotal,
             ]);
             
+        }
+        public function LoadContent(){
+            $current_page = isset($_POST['page']) ? $_POST['page'] : 1;
+            $postOnePage = 10; 
+            $startRecord = ($current_page - 1) * $postOnePage;
+            $roles = $this->roleModel->getAllLimit($startRecord, $postOnePage);
+            $stt = $startRecord;
+            for($i = 0; $i < count($roles); $i++){
+                $stt ++;
+                echo 
+                "
+                    <tr class='row-table'>
+                        <td>$stt</td>
+                        <td>".$roles[$i]["name"]."</td>
+                        <td>".$roles[$i]["description"]."</td>
+                        <td><a href='./index.php?controller=user&action=editUser&id=".$roles[$i]["id"]."'><i class='editBtn fas fa-edit'></i></a></td>
+                        <td><a href='./index.php?controller=user&action=delete&id=".$roles[$i]["id"]."'><i class='removeBtn fas fa-trash-alt'></i></a></td>
+                    </tr>
+                ";
+            }
         }
         public function addRole($alert=''){
             return $this->view('frontend.role.add',[

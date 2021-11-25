@@ -14,21 +14,49 @@
         }
         
         public function index(){
-            $products = $this->productModel->getAll();
-            $productOnePage = 4;
-            $TotalProduct = count($products);
+            $productOnePage = 8;
+            $TotalProduct = $this->productModel->getNumRecord();
             $pageTotal = ceil($TotalProduct/$productOnePage);
-           return $this->view('frontend.home.index',[
+            return $this->view('frontend.home.index',[
                 "pageTotal" => $pageTotal
            ]);
         }
 
         public function loadcontent(){
             $current_page = isset($_POST['page']) ? $_POST['page'] : 1;
-            $productOnePage = 4; // Số sản phẩm trên 1 trang
+            $productOnePage = 8; // Số sản phẩm trên 1 trang
             $startRecord = ($current_page - 1) * $productOnePage;
             $data = $this->productModel->getAllLimit($startRecord, $productOnePage);
-            
+            if(isset($_POST["sortBy"])){
+                $sortBy = $_POST["sortBy"];
+                switch($sortBy){
+                    case "default":
+                        $data = $this->productModel->getAllLimit($startRecord, $productOnePage);
+                        break;
+                    case "new":
+                        $data = $this->productModel->getAllLimit($startRecord, $productOnePage,"created_at desc");
+                        break;
+                    case "asc":
+                        $data = $this->productModel->getAllLimit($startRecord, $productOnePage,"price asc");
+                        break;
+                    case "desc":
+                        $data = $this->productModel->getAllLimit($startRecord, $productOnePage,"price desc");
+                        break;
+                    default:
+                        $data = $this->productModel->getAllLimit($startRecord, $productOnePage);
+                }
+            }
+            if(isset($_POST["keyword"])){
+                $keyword = $_POST["keyword"];
+                $data = $this->productModel->searchAllLimit($startRecord, $productOnePage,'title',$keyword);
+                if(count($data) == 0){
+                    echo '
+                    <div class="alert alert-danger" role="alert">
+                        Không tìm thấy sản phẩm
+                    </div>
+                    ';
+                }
+            }
             for($i = 0; $i < count($data); $i++){
                     $old_price_formated = number_format($data[$i]["price"], 0, '', ',');
                     $current_price = $data[$i]["discount"] !=0 ? ($data[$i]["price"] - $data[$i]["price"]*($data[$i]["discount"]/100)) :  $data[$i]["price"];

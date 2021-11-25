@@ -54,22 +54,7 @@
                 ";
                 
             }
-            echo " <li><a href='mail.html'>PHẢN HỒI</a></li>";
+            echo " <li><a href='./index.php?controller=mail'>PHẢN HỒI</a></li>";
             
-        }
-        // Danh mục sản phẩm trong product detail
-        public function loadCategoryList(){
-            // load danh mục cấp 1
-            $categoriesLv1 = $this->categoryLv1Model->getAll();
-            for($i = 0; $i < count($categoriesLv1); $i++){
-                echo "<li><a href='products.html'>".$categoriesLv1[$i]["name"]."</a> <span>(15)</span></li>";
-                $categoriesLv2 = $this->categoryLv2Model->findAllByCondition("category_lv1ID",$categoriesLv1[$i]["id"]);
-                for($j = 0; $j < count($categoriesLv2); $j++){
-                    echo
-                        "<ul>
-                            <li><a href='products.html'>".$categoriesLv2[$j]["name"]."</a> <span>(2)</span></li>
-                        </ul>";
-                }
-            }
         }
     }

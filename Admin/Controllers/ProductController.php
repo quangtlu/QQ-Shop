@@ -19,12 +19,10 @@
 
             $this->loadModel("CategoryLv2Model");
             $this->categoryLv2Model = new CategoryLv2Model();
-
         }
         
         public function index($alert=''){
-            $products = $this->productModel->getAll();
-            $postTotal = count($products);
+            $postTotal = $this->productModel->getNumRecord();
             $postOnePage = 5; 
             $pageTotal = ceil($postTotal / $postOnePage);
             $categoriesLv1 = $this->categoryLv1Model->getAll();
@@ -35,6 +33,8 @@
                 "categoriesLv1" => $categoriesLv1,
 
             ]);
+            
+
             
         }
         public function LoadContent(){
@@ -51,16 +51,17 @@
             $stt = $startRecord;
             for($i = 0; $i < count($data); $i++){
                 $url_image = $this->fixUrl($data[$i]['thumbnail']);
+                $price_formated = number_format($data[$i]['price'], 0, '', ',');
                 $stt ++;
                 echo 
                 "
                 <tr class='row-content'>
                     <td>$stt</td>
-                    <td><img class='thumbnail-img' src='".$url_image."' alt=''></td>
+                    <td><img class='thumbnail-img' src='".$url_image."' alt='Ảnh ".$data[$i]["title"]."'></td>
                     <td>".$data[$i]['title']."</td>
                     <td>".$categoryName[$i]['name']."</td>
-                    <td>".$data[$i]['price']."</td>
-                    <td>".$data[$i]['discount']."</td>
+                    <td>".$price_formated."₫</td>
+                    <td>".$data[$i]['discount']."%</td>
                     <td><a href='./index.php?controller=product&action=detail&id=".$data[$i]['id']."'><i class='editBtn far fa-eye'></i></a></td>
                     <td><a href='./index.php?controller=product&action=editProduct&id=".$data[$i]['id']."'><i class='editBtn fas fa-edit'></i></a></td>
                     <td><a href='./index.php?controller=product&action=delete&id=".$data[$i]['id']."'><i class='removeBtn fas fa-trash-alt'></i></a></td>
@@ -80,7 +81,9 @@
                 $category_lv3ID = $this->categoryLv3Model->findByTwoCondition("name",$categoryNameLV3,"category_lv2ID",$categoryNameLV2ID)[0]["id"];
 
                 $thumbnail = $this->moveFile("thumbnail");
+
                 $description = $_POST["description"];
+
                 $details = $this->moveMutilFile("details");
 
                 $data = [
@@ -131,8 +134,10 @@
 
 
                 $description = $_POST["description"];
+
                 $thumbnail = $this->moveFile("thumbnail");
                 $galleries = $this->moveMutilFile("galleries");
+
                 $data = [
                     'title' => $title,
                     'price' => $price,

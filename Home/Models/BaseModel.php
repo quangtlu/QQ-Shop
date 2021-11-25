@@ -26,10 +26,32 @@ class BaseModel extends Database{
         return $data;
 
     }
+    public function count($table){
+        $sql = "SELECT * from $table";
+        $query = $this->_query($sql);
+        return mysqli_num_rows($query);
+    }
     // Lấy tất cả các bản ghi limit
-    public function all_limit($table,$start,$number){        
+    public function all_limit($table,$start,$number,$orderByString=''){        
+        if($orderByString != ''){
+            $sql = "SELECT * FROM $table ORDER BY $orderByString limit {$start}, {$number} ";
+        }
+        else{
+            $sql = "SELECT * FROM $table limit {$start}, {$number}";
+        }
+        
+        $query = $this->_query($sql);
+        $data = [];
+        while($row =  mysqli_fetch_assoc($query)){
+            array_push($data,$row);
+        }
+        return $data;
 
-        $sql = "SELECT * FROM $table limit {$start}, {$number}";
+    }
+     // Lấy tất cả các bản ghi limit
+     public function search_limit($table,$start,$number,$col,$keyword){        
+
+        $sql = "SELECT * FROM $table WHERE $col like '%$keyword%' limit {$start}, {$number}";
         
         $query = $this->_query($sql);
         $data = [];
@@ -66,8 +88,13 @@ class BaseModel extends Database{
         
     }
     // Lấy ra tất cả bản ghi nếu có column = value
-    public function findAllByLimit($table,$col,$value,$start,$number){
-        $sql = "SELECT * FROM $table WHERE $col = '".$value."' limit {$start}, {$number}";
+    public function findAllByLimit($table,$col,$value,$start,$number,$orderByString=''){
+        if($orderByString != ''){
+            $sql = "SELECT * FROM $table WHERE $col = '".$value."' ORDER BY $orderByString limit {$start}, {$number} ";
+        }
+        else{
+            $sql = "SELECT * FROM $table WHERE $col = '".$value."' limit {$start}, {$number}";
+        }
         $query = $this->_query($sql);
         $data = [];
         while($row =  mysqli_fetch_assoc($query)){
@@ -76,6 +103,8 @@ class BaseModel extends Database{
         return $data;
         
     }
+
+    
     // Lấy ra tất cả bản ghi nếu có col1 = val1 and col2 = val2
 
     public function finAllByTwo($table,$col1,$val1,$col2,$val2){
@@ -151,6 +180,12 @@ class BaseModel extends Database{
             echo "Lỗi truy vấn";
         }
     }
+    public function findMax($table,$maxCol){
+        $sql = "SELECT * FROM $table order by $maxCol DESC limit 1";
+        $query = $this->_query($sql);
+        return mysqli_fetch_assoc($query);
+    }
+
     // Thêm dữ liệu vào bảng
     public function create($table,$data = []){
 

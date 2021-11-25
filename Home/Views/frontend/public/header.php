@@ -2,18 +2,35 @@
 	<div class="header">
 	    <div class="container">
 	        <div class="header-grid">
+	            <div class="header-grid-right animated wow slideInRight" data-wow-delay=".5s">
+	                <ul class="social-icons">
+	                    <li><a href="#" class="facebook"></a></li>
+	                    <li><a href="#" class="twitter"></a></li>
+	                    <li><a href="#" class="g"></a></li>
+	                    <li><a href="#" class="instagram"></a></li>
+	                </ul>
+	            </div>
 	            <div class="header-grid-left animated wow slideInLeft" data-wow-delay=".5s">
 	                <ul>
 	                    <?php 
 							if(isset($_SESSION["phone"])){
 								echo "
-									<li>
+									<li class='user-item'>
 										<i class='glyphicon fas fa-user' aria-hidden='true'></i>
 										<span data-id='".$_SESSION["phone"]."' class='user-info'></span>
-									</li>
-									<li>
-										<i class='glyphicon fas fa-sign-in-alt' aria-hidden='true'></i>
-										<a href='./index.php?controller=home&action=logout'>Đăng xuất</a>
+										<ul class='list-option'>
+											<li>
+												<a href='#' class='list-option-link'><i class='glyphicon fas fa-user' aria-hidden='true'></i>Tài khoản</a>
+											</li>
+											<li>
+												
+												<a href='./index.php?controller=order&action=orderlist' class='list-option-link'><i class='glyphicon fas fa-shopping-cart'></i>Đơn hàng</a>
+											</li>
+											<li>
+												
+												<a href='./index.php?controller=home&action=logout'><i class='glyphicon fas fa-sign-in-alt' aria-hidden='true'></i>Đăng xuất</a>
+											</li>
+										</ul>
 									</li>
 									";
 							}
@@ -31,14 +48,6 @@
 							}
 						
 						?>
-	                </ul>
-	            </div>
-	            <div class="header-grid-right animated wow slideInRight" data-wow-delay=".5s">
-	                <ul class="social-icons">
-	                    <li><a href="#" class="facebook"></a></li>
-	                    <li><a href="#" class="twitter"></a></li>
-	                    <li><a href="#" class="g"></a></li>
-	                    <li><a href="#" class="instagram"></a></li>
 	                </ul>
 	            </div>
 	            <div class="clearfix"> </div>
@@ -69,8 +78,8 @@
 	            <div class="logo-nav-right">
 	                <div class="search-box">
 	                    <div id="sb-search" class="sb-search">
-	                        <form>
-	                            <input class="sb-search-input" placeholder="Enter your search term..." type="search"
+	                        <form id="search-form">
+	                            <input class="sb-search-input" placeholder="Nhập tên sản phẩm..." type="search"
 	                                id="search">
 	                            <input class="sb-search-submit" type="submit" value="">
 	                            <span class="sb-icon-search"> </span>
@@ -90,8 +99,8 @@
 	                    <a href="./index.php?controller=order">
 	                        <h3>
 	                            <i class="cart-icon fas fa-shopping-cart">
-									<span class="cart-number" id="cart"></span>
-								</i>
+	                                <span class="cart-number" id="cart"></span>
+	                            </i>
 	                        </h3>
 	                    </a>
 	                    <div class="clearfix"> </div>
@@ -125,13 +134,68 @@ $(document).ready(function() {
             $('.user-info').html(data);
         }
     });
-	// Load số sản phẩm trong cart
-	$.ajax({
-		url		: './index.php?controller=order&action=NumProduct',
-		dataType: 'html',
-		success : function(data){
-			$('#cart').html(data);
-		}
-	});
+    // Load số sản phẩm trong cart
+    $.ajax({
+        url: './index.php?controller=order&action=NumProduct',
+        dataType: 'html',
+        success: function(data) {
+            $('#cart').html(data);
+
+        }
+    });
+    // Tìm kiếm sản phẩm
+    $('#search-form').on('submit', function(e) {
+        e.preventDefault()
+        var keyword = $('#search').val()
+        $.ajax({
+            url: './index.php?controller=home&action=loadcontent',
+            type: "POST",
+            data: {
+                keyword: keyword
+            },
+            dataType: 'html',
+            success: function(data) {
+				$('.new-collections').show()
+                $('.hide-when-search').hide();
+                $('.list-product').html(data);
+                $('.title-list-product').html('Kết quả tìm kiếm');
+
+                // Dữ liệu khi click
+                $('a.page-link').on('click', function() {
+                    var _p = $(this).text();
+                    $.ajax({
+                        url: './index.php?controller=home&action=loadcontent',
+                        data: {
+                            page: _p,
+							keyword: keyword
+
+                        },
+                        type: 'POST',
+                        dataType: 'html',
+                        success: function(data) {
+							$('.new-collections').show()
+                            $('.hide-when-search').hide();
+							$('.list-product').html(data);
+							$('.title-list-product').html('Kết quả tìm kiếm');
+
+                        }
+                    });
+                });
+				// Active số trang khi click
+                $("li.page-item-search").first().addClass('active')
+
+                $("li.page-item-search").click(function() {
+                    if ($(this).hasClass("active")) {
+                        $(".page-item-search").removeClass("active");
+                    } else {
+                        $(".page-item-search").removeClass("active");
+                        $(this).addClass("active");
+                    }
+                });
+                
+            }
+        });
+    })
+
 });
 	</script>

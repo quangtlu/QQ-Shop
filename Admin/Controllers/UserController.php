@@ -14,16 +14,38 @@
         }
         
         public function index(){
-            $users = $this->userModel->getAll();
-            $roles = [];
-            foreach($users as $item){
-                array_push($roles,$this->roleModel->findById($item["role_id"]));
-            }
+            $postTotal = $this->userModel->getNumRecord();
+            $postOnePage = 10; 
+            $pageTotal = ceil($postTotal / $postOnePage);
             return $this->view('frontend.user.index',[
-                "users" => $users,
-                "roles" => $roles,
+                "pageTotal" => $pageTotal,
+
             ]);
             
+        }
+        public function LoadContent(){
+            $current_page = isset($_POST['page']) ? $_POST['page'] : 1;
+            $postOnePage = 10; 
+            $startRecord = ($current_page - 1) * $postOnePage;
+            $users = $this->userModel->getAllLimit($startRecord, $postOnePage);
+            $roles = $this->roleModel->getAllLimit($startRecord, $postOnePage);
+            $stt = $startRecord;
+            for($i = 0; $i < count($users); $i++){
+                $stt ++;
+                echo 
+                "
+                    <tr class='row-table'>
+                        <td>$stt</td>
+                        <td>".$users[$i]["fullname"]."</td>
+                        <td>".$users[$i]["phone"]."</td>
+                        <td>".$users[$i]["email"]."</td>
+                        <td>".$users[$i]["address"]."</td>
+                        <td>".$roles[$i]["name"]."</td>
+                        <td><a href='./index.php?controller=user&action=editUser&id=".$users[$i]["id"]."'><i class='editBtn fas fa-edit'></i></a></td>
+                        <td><a href='./index.php?controller=user&action=delete&id=".$users[$i]["id"]."'><i class='removeBtn fas fa-trash-alt'></i></a></td>
+                    </tr>
+                ";
+            }
         }
         public function adduser($alert=''){
             $roles = $this->roleModel->getAll();
